@@ -2,6 +2,7 @@ package io.github.seondongpyo.page;
 
 import com.codeborne.selenide.WebDriverConditions;
 
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 
 public class SrtLoginPage {
@@ -11,7 +12,7 @@ public class SrtLoginPage {
 
     public SrtMainPage login(String id, String password) {
         $("#srchDvCd3").click();
-        $("#srchDvNm03").val(id);
+        $("#srchDvNm03").shouldBe(visible).val(id);
         $("#hmpgPwdCphd03").val(password).submit();
         webdriver().shouldHave(WebDriverConditions.title(SrtMainPage.TITLE));
         return page(SrtMainPage.class);
