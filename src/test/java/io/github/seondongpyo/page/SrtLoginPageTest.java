@@ -15,4 +15,12 @@ class SrtLoginPageTest {
         open(SrtLoginPage.URL, SrtLoginPage.class);
         assertThat(title()).isEqualTo(SrtLoginPage.TITLE);
     }
+
+    @DisplayName("휴대전화 번호와 비밀번호로 로그인을 성공하면 메인 페이지로 이동한다.")
+    @Test
+    void login() {
+        SrtLoginPage loginPage = open(SrtLoginPage.URL, SrtLoginPage.class);
+        loginPage.login("", "");
+        assertThat(title()).isEqualTo(SrtMainPage.TITLE);
+    }
 }
