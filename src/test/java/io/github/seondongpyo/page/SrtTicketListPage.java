@@ -1,10 +1,10 @@
 package io.github.seondongpyo.page;
 
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.WebDriverConditions;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThanOrEqual;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.*;
 
 public class SrtTicketListPage implements SrtTicketSearchablePage {
 
@@ -24,5 +24,11 @@ public class SrtTicketListPage implements SrtTicketSearchablePage {
     public ElementsCollection getSearchResults() {
         return $$("#result-form > fieldset > div.tbl_wrap.th_thead > table > tbody tr")
             .shouldHave(sizeGreaterThanOrEqual(1));
+    }
+
+    public SrtReservationPage selectFirstResult() {
+        getSearchResults().first().find("td", 6).find("a").as("'예약하기' 버튼").click();
+        webdriver().shouldHave(WebDriverConditions.title(SrtReservationPage.TITLE));
+        return page(SrtReservationPage.class);
     }
 }
