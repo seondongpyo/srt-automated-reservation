@@ -20,7 +20,7 @@ class SrtMainPageTest {
     @Test
     void search() {
         SrtMainPage mainPage = open(SrtMainPage.URL, SrtMainPage.class);
-        mainPage.search("수서", "오송", "2022.08.13", "160000");
+        mainPage.search("수서", "오송", 2, "2022.08.13", "160000");
         assertThat(title()).isEqualTo(SrtTicketListPage.TITLE);
     }
 }

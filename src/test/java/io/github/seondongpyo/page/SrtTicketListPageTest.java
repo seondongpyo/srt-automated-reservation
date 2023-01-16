@@ -18,7 +18,7 @@ class SrtTicketListPageTest {
     void setup() {
         Configuration.holdBrowserOpen = true;
         ticketListPage = open(SrtTicketListPage.URL, SrtTicketListPage.class);
-        ticketListPage.search("수서", "오송", "20220813", "180000");
+        ticketListPage.search("수서", "오송", 2, "20220813", "180000");
     }
 
     @DisplayName("승차권 조회 결과 중 첫 번째 결과의 일반석 승차권 유무를 조회한다.")

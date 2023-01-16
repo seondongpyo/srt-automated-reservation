@@ -1,10 +1,10 @@
 package io.github.seondongpyo.page;
 
+import static com.codeborne.selenide.CollectionCondition.*;
+import static com.codeborne.selenide.Selenide.*;
+
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.WebDriverConditions;
-
-import static com.codeborne.selenide.CollectionCondition.sizeGreaterThanOrEqual;
-import static com.codeborne.selenide.Selenide.*;
 
 public class SrtTicketListPage implements SrtTicketSearchablePage {
 
@@ -12,9 +12,11 @@ public class SrtTicketListPage implements SrtTicketSearchablePage {
     public static final String TITLE = "일반승차권 조회 < 승차권예약 < 승차권 < 승차권 예약/발매 - 국민철도 SR";
 
     @Override
-    public SrtTicketListPage search(String departmentStation, String arrivalStation, String date, String time) {
+    public SrtTicketListPage search(String departmentStation, String arrivalStation, int count, String date, String time) {
         $("#dptRsStnCdNm").val(departmentStation);
         $("#arvRsStnCdNm").val(arrivalStation);
+        $("#search-form > fieldset > div.box1 > div > ul > li:nth-child(2) > div.pic_mid_r > div:nth-child(1) > select")
+            .selectOptionByValue(String.valueOf(count));
         $("#dptDt").selectOptionByValue(date);
         $("#dptTm").selectOptionByValue(time);
         $("#search_top_tag > input").click();
