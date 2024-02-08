@@ -1,10 +1,13 @@
 package io.github.seondongpyo.page;
 
-import static com.codeborne.selenide.CollectionCondition.*;
-import static com.codeborne.selenide.Selenide.*;
-
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.WebDriverConditions;
+
+import java.time.Duration;
+
+import static com.codeborne.selenide.CollectionCondition.sizeGreaterThanOrEqual;
+import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selenide.*;
 
 public class SrtTicketListPage implements SrtTicketSearchablePage {
 
@@ -20,6 +23,8 @@ public class SrtTicketListPage implements SrtTicketSearchablePage {
         $("#dptDt").selectOptionByValue(date);
         $("#dptTm").selectOptionByValue(time);
         $("#search_top_tag > input").click();
+
+        $("#NetFunnel_Loading_Popup").shouldBe(visible).shouldNotBe(visible, Duration.ofMinutes(5));
         return this;
     }
 

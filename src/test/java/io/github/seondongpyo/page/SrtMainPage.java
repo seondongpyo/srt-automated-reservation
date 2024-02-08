@@ -1,9 +1,12 @@
 package io.github.seondongpyo.page;
 
-import static com.codeborne.selenide.Selenide.*;
-
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverConditions;
+
+import java.time.Duration;
+
+import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
 public class SrtMainPage implements SrtTicketSearchablePage {
 
@@ -21,7 +24,13 @@ public class SrtMainPage implements SrtTicketSearchablePage {
         $("#dptTm").selectOptionByValue(time);
         executeJavaScript("selectScheduleList(); return false;");
 
-        webdriver().shouldHave(WebDriverConditions.title(SrtTicketListPage.TITLE));
+        webdriver().shouldHave(WebDriverConditions.title(SrtTicketListPage.TITLE), Duration.ofMinutes(5));
+        return page(SrtTicketListPage.class);
+    }
+
+    public SrtTicketListPage gotoTicketListPage() {
+        getWebDriver().get(SrtTicketListPage.URL);
+        webdriver().shouldHave(WebDriverConditions.urlContaining("selectScheduleList.do"), Duration.ofMinutes(1));
         return page(SrtTicketListPage.class);
     }
 }
