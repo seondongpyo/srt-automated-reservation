@@ -9,6 +9,7 @@ import org.openqa.selenium.edge.EdgeOptions;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -43,6 +44,14 @@ class SrtIntegrationTest {
             List<String> accountInfo = Files.readAllLines(Paths.get("account.txt"));
             String id = accountInfo.get(0);
             String password = accountInfo.get(1);
+            String cardNo1 = accountInfo.get(2);
+            String cardNo2 = accountInfo.get(3);
+            String cardNo3 = accountInfo.get(4);
+            String cardNo4 = accountInfo.get(5);
+            String mm = accountInfo.get(6);
+            String yy = accountInfo.get(7);
+            String cardPassword = accountInfo.get(8);
+            String birth = accountInfo.get(9);
 
             SrtLoginPage loginPage = open(SrtLoginPage.URL, SrtLoginPage.class);
             SrtMainPage mainPage = loginPage.login(id, password);
@@ -69,6 +78,24 @@ class SrtIntegrationTest {
 
                     webdriver().shouldHave(WebDriverConditions.title("예약하기 < 승차권예약 < 승차권 < 승차권 예약/발매 - 국민철도 SR"));
                     $("#list-form > fieldset > div.tal_c > a.btn_large.btn_blue_dark.val_m.mgr10").shouldHave(visible).click();
+
+                    webdriver().shouldHave(WebDriverConditions.title("결제하기 < 승차권예약 < 승차권 < 승차권 예약/발매 - 국민철도 SR"));
+                    $("#Tk_stlCrCrdNo14_checkbox").setSelected(false);
+                    $("#stlCrCrdNo11").sendKeys(cardNo1);
+                    $("#stlCrCrdNo12").sendKeys(cardNo2);
+                    $("#stlCrCrdNo13").sendKeys(cardNo3);
+                    $("#stlCrCrdNo14").sendKeys(cardNo4);
+                    $("#crdVlidTrm1M").selectOptionByValue(mm);
+                    $("#crdVlidTrm1Y").selectOptionByValue(yy);
+
+                    $("#Tk_vanPwd1_checkbox").setSelected(false);
+                    $("#vanPwd1").sendKeys(cardPassword);
+                    $("#athnVal1").sendKeys(birth);
+
+                    $("#select-form > fieldset > div.issues-area > div.tab.tab3 > ul > li:nth-child(2) > a").click();
+                    switchTo().alert(Duration.ofSeconds(3)).accept();
+                    $("#requestIssue1").click();
+                    switchTo().alert(Duration.ofSeconds(1)).accept();
                     return true;
                 }
 
