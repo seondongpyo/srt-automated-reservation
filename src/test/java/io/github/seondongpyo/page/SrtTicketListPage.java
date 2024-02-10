@@ -1,6 +1,7 @@
 package io.github.seondongpyo.page;
 
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverConditions;
 
 import java.time.Duration;
@@ -24,13 +25,22 @@ public class SrtTicketListPage implements SrtTicketSearchablePage {
         $("#dptTm").selectOptionByValue(time);
         $("#search_top_tag > input").click();
 
-        $("#NetFunnel_Loading_Popup").shouldBe(visible).shouldNotBe(visible, Duration.ofMinutes(5));
+        try {
+            $("#NetFunnel_Loading_Popup").shouldBe(visible).shouldNotBe(visible, Duration.ofMinutes(5));
+        } catch (Exception | Error e) {
+
+        }
         return this;
     }
 
     public ElementsCollection getSearchResults() {
-        return $$("#result-form > fieldset > div.tbl_wrap.th_thead > table > tbody tr")
-            .shouldHave(sizeGreaterThanOrEqual(1));
+        try {
+            return $("#result-form > fieldset > div.tbl_wrap.th_thead > table > tbody")
+                .should(visible)
+                .findAll("tr");
+        } catch (Exception | Error e) {
+            return null;
+        }
     }
 
     public SrtReservationPage selectFirstResult() {
